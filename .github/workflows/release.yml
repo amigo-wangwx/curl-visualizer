@@ -85,8 +85,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release_tag.outputs.tag }}
+          REPOSITORY: ${{ github.repository }}
         shell: bash
         run: |
-          gh release view "$RELEASE_TAG" >/dev/null 2>&1 ||
-            gh release create "$RELEASE_TAG" --title "$RELEASE_TAG" --generate-notes
-          gh release upload "$RELEASE_TAG" release-assets/* --clobber
+          gh release view "$RELEASE_TAG" --repo "$REPOSITORY" >/dev/null 2>&1 ||
+            gh release create "$RELEASE_TAG" --repo "$REPOSITORY" --title "$RELEASE_TAG" --generate-notes
+          gh release upload "$RELEASE_TAG" release-assets/* --repo "$REPOSITORY" --clobber
