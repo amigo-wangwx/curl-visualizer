@@ -19,14 +19,26 @@
 ./gradlew :app:run
 ```
 
+## 下载安装
+
+在 [GitHub Releases](https://github.com/amigo-wangwx/curl-visualizer/releases) 下载对应平台的安装包：
+
+- macOS：下载 `CurlVisualizer-版本号.dmg`。
+- Windows：优先下载 `CurlVisualizer-版本号.msi`，也可以使用 `CurlVisualizer-版本号.exe`。
+
+macOS 首次打开未签名应用时，可能会受到 Gatekeeper 或 quarantine 隔离属性限制。可以在“系统设置 > 隐私与安全性”中允许打开，或在确认来源可信后清理隔离属性。
+
+Windows 首次运行未签名安装包时，可能会出现 SmartScreen 提醒。确认来源为本仓库 Release 后，可以选择继续运行。
+
 ## 打包
 
 ```bash
 ./gradlew :app:packageDmg
 ./gradlew :app:packageMsi
+./gradlew :app:packageExe
 ```
 
-`packageDmg` 用于生成 macOS 安装包，`packageMsi` 需要在 Windows 上运行。
+`packageDmg` 用于生成 macOS 安装包，`packageMsi` 和 `packageExe` 需要在 Windows 上运行。
 
 构建产物默认输出到根目录 `build/app/`，不会分散生成到 `app/build/`。如果需要自定义构建输出根目录，可以通过 Gradle 属性 `build.dir` 指定。
 
