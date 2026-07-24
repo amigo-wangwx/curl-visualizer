@@ -1,4 +1,4 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.data.settings
 
 import kotlinx.serialization.Serializable
 

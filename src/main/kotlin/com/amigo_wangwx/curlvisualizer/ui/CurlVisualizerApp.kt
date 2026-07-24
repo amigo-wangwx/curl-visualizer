@@ -1,5 +1,15 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.ui
 
+import com.amigo_wangwx.curlvisualizer.curl.CurlCommandParser
+import com.amigo_wangwx.curlvisualizer.curl.CurlDisplayInfo
+import com.amigo_wangwx.curlvisualizer.curl.CurlRunResult
+import com.amigo_wangwx.curlvisualizer.curl.CurlRunner
+import com.amigo_wangwx.curlvisualizer.curl.HeaderLine
+import com.amigo_wangwx.curlvisualizer.curl.JsonFormatter
+import com.amigo_wangwx.curlvisualizer.data.history.CurlHistoryItem
+import com.amigo_wangwx.curlvisualizer.data.history.HistoryState
+import com.amigo_wangwx.curlvisualizer.data.history.HistoryStore
+import com.amigo_wangwx.curlvisualizer.data.history.ResponseHistoryItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.VerticalScrollbar
@@ -58,9 +68,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.launch
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -71,35 +78,6 @@ import java.time.format.DateTimeFormatter
 private val historyTimeFormatter = DateTimeFormatter
     .ofPattern("MM-dd HH:mm:ss")
     .withZone(ZoneId.systemDefault())
-
-/**
- * Application entry point for the desktop curl visualizer.
- *
- * Lifecycle: Compose Desktop creates one main window and keeps all curl state in the root composable.
- */
-fun main() = application {
-    val settingsStore = remember { AppSettingsStore() }
-    val settings = remember { settingsStore.load() }
-    val windowState = rememberWindowState(
-        width = settings.windowWidthDp.dp,
-        height = settings.windowHeightDp.dp,
-    )
-
-    Window(
-        state = windowState,
-        onCloseRequest = {
-            // 只记录尺寸不记录坐标，避免外接屏变化后窗口恢复到不可见区域。
-            settingsStore.saveWindowSize(
-                widthDp = windowState.size.width.value.toInt(),
-                heightDp = windowState.size.height.value.toInt(),
-            )
-            exitApplication()
-        },
-        title = "Curl Visualizer",
-    ) {
-        CurlVisualizerApp()
-    }
-}
 
 /**
  * Root app theme and surface.

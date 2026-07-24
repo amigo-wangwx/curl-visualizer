@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
 }
 
-group = "com.wang.curlvisualizer"
+group = "com.amigo_wangwx.curlvisualizer"
 version = "1.0.0"
 
 kotlin {
@@ -23,17 +23,17 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.wang.curlvisualizer.MainKt"
+        mainClass = "com.amigo_wangwx.curlvisualizer.app.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi)
             packageName = "CurlVisualizer"
             packageVersion = "1.0.0"
             description = "A desktop curl response visualizer."
-            vendor = "wangwx"
+            vendor = "amigo_wangwx"
 
             macOS {
-                bundleID = "com.wang.curlvisualizer"
+                bundleID = "com.amigo_wangwx.curlvisualizer"
                 appCategory = "public.app-category.developer-tools"
             }
 

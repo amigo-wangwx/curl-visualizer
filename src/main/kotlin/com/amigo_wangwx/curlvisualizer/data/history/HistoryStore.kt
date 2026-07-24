@@ -1,5 +1,7 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.data.history
 
+import com.amigo_wangwx.curlvisualizer.curl.CurlResponse
+import com.amigo_wangwx.curlvisualizer.curl.CurlRunResult
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.nio.file.Files

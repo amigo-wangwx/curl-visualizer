@@ -1,4 +1,4 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.curl
 
 /**
  * Parses a pasted curl command into process arguments.

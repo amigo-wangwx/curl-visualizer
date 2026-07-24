@@ -1,5 +1,6 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.data.history
 
+import com.amigo_wangwx.curlvisualizer.curl.HeaderLine
 import kotlinx.serialization.Serializable
 
 /**

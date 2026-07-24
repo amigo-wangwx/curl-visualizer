@@ -1,4 +1,4 @@
-package com.wang.curlvisualizer
+package com.amigo_wangwx.curlvisualizer.ui
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
