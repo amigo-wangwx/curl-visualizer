@@ -16,17 +16,19 @@
 ## 运行
 
 ```bash
-./gradlew run
+./gradlew :app:run
 ```
 
 ## 打包
 
 ```bash
-./gradlew packageDmg
-./gradlew packageMsi
+./gradlew :app:packageDmg
+./gradlew :app:packageMsi
 ```
 
 `packageDmg` 用于生成 macOS 安装包，`packageMsi` 需要在 Windows 上运行。
+
+构建产物默认输出到根目录 `build/app/`，不会分散生成到 `app/build/`。如果需要自定义构建输出根目录，可以通过 Gradle 属性 `build.dir` 指定。
 
 ## 安全限制
 

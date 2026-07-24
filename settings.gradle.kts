@@ -1,5 +1,7 @@
 rootProject.name = "curl-visualizer"
 
+include(":app")
+
 pluginManagement {
     repositories {
         google()

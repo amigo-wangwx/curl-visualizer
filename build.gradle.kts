@@ -1,46 +1,26 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
-    kotlin("jvm") version "2.3.0"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
-    id("org.jetbrains.compose") version "1.10.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
+    kotlin("jvm") version "2.3.0" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0" apply false
+    id("org.jetbrains.compose") version "1.10.0" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0" apply false
 }
 
 group = "com.amigo_wangwx.curlvisualizer"
 version = "1.0.0"
 
-kotlin {
-    jvmToolchain(17)
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }
 
-dependencies {
-    implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.compose.material3:material3:1.10.0-alpha05")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-}
+subprojects {
+    // 通用配置
+    val configuredBuildDir = providers.gradleProperty("build.dir").orNull
+    val modulePath = project.path.replace(':', '/').trim('/')
 
-compose.desktop {
-    application {
-        mainClass = "com.amigo_wangwx.curlvisualizer.app.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi)
-            packageName = "CurlVisualizer"
-            packageVersion = "1.0.0"
-            description = "A desktop curl response visualizer."
-            vendor = "amigo_wangwx"
-
-            macOS {
-                bundleID = "com.amigo_wangwx.curlvisualizer"
-                appCategory = "public.app-category.developer-tools"
-            }
-
-            windows {
-                menuGroup = "Curl Visualizer"
-                upgradeUuid = "6D9E477B-58DF-4C9F-96E8-BB31F39B6136"
-            }
-        }
+    // 统一子模块构建输出，避免每个模块目录下生成分散的 build 文件夹。
+    if (!configuredBuildDir.isNullOrBlank()) {
+        layout.buildDirectory.set(file("$configuredBuildDir/${rootProject.name}/build/$modulePath"))
+    } else {
+        layout.buildDirectory.set(rootProject.layout.buildDirectory.dir(modulePath))
     }
 }
