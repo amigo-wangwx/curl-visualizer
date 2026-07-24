@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.amigo_wangwx.curlvisualizer"
-version = "1.0.1"
+version = providers.gradleProperty("app.version").get()
 
 kotlin {
     jvmToolchain(17)
@@ -28,7 +28,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe)
             packageName = "CurlVisualizer"
-            packageVersion = "1.0.1"
+            packageVersion = project.version.toString()
             description = "A desktop curl response visualizer."
             vendor = "amigo_wangwx"
 

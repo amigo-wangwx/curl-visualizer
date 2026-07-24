@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.amigo_wangwx.curlvisualizer"
-version = "1.0.0"
+version = providers.gradleProperty("app.version").get()
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
