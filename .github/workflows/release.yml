@@ -90,4 +90,5 @@ jobs:
         run: |
           gh release view "$RELEASE_TAG" --repo "$REPOSITORY" >/dev/null 2>&1 ||
             gh release create "$RELEASE_TAG" --repo "$REPOSITORY" --title "$RELEASE_TAG" --generate-notes
-          gh release upload "$RELEASE_TAG" release-assets/* --repo "$REPOSITORY" --clobber
+          find release-assets -type f -print0 |
+            xargs -0 gh release upload "$RELEASE_TAG" --repo "$REPOSITORY" --clobber
