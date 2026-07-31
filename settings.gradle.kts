@@ -1,6 +1,6 @@
 rootProject.name = "curl-visualizer"
 
-include(":app")
+include(":app", ":cli", ":curl-core")
 
 pluginManagement {
     repositories {

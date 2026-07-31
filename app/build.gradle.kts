@@ -15,6 +15,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":curl-core"))
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material3:material3:1.10.0-alpha05")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")

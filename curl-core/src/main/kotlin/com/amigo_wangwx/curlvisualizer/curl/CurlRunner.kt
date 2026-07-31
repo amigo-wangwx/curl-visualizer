@@ -8,11 +8,13 @@ import java.nio.charset.Charset
 import kotlin.system.measureTimeMillis
 
 /**
- * Executes curl as a single local process and returns captured output.
+ * Executes curl as a single local process and applies a result rule before returning.
  *
- * Lifecycle: created by the UI and called from a coroutine whenever the user presses the run button.
+ * Lifecycle: the GUI calls this facade once; process execution and rule application both remain inside core.
  */
-class CurlRunner {
+class CurlRunner(
+    private val resultRule: CurlCommandResultRule = DefaultCurlCommandResultRule,
+) {
     /**
      * Runs the given command text and captures stdout, stderr, exit code, and elapsed time.
      *
@@ -43,18 +45,53 @@ class CurlRunner {
             }
         }
 
-        CurlRunResult(
-            args = args,
-            response = CurlResponseParser.parse(stdout),
-            stderr = stderr.trim(),
-            exitCode = exitCode,
-            elapsedMillis = elapsedMillis,
+        resultRule.process(
+            CurlCommandExecution(
+                args = args,
+                stdout = stdout,
+                stderr = stderr,
+                exitCode = exitCode,
+                elapsedMillis = elapsedMillis,
+            ),
         )
     }
 }
 
 /**
- * Immutable result for one curl execution.
+ * Complete curl process facts passed to a configured core rule.
+ *
+ * The rule runs inside [CurlRunner], so GUI callers never perform a manual second processing step.
+ */
+data class CurlCommandExecution(
+    val args: List<String>,
+    val stdout: String,
+    val stderr: String,
+    val exitCode: Int,
+    val elapsedMillis: Long,
+)
+
+/** Converts complete curl process facts into the final result consumed by a GUI caller. */
+fun interface CurlCommandResultRule {
+    fun process(execution: CurlCommandExecution): CurlRunResult
+}
+
+/**
+ * Default GUI rule that preserves command metadata and parses the complete response for visualization.
+ */
+object DefaultCurlCommandResultRule : CurlCommandResultRule {
+    override fun process(execution: CurlCommandExecution): CurlRunResult {
+        return CurlRunResult(
+            args = execution.args,
+            response = CurlResponseParser.parse(execution.stdout),
+            stderr = execution.stderr.trim(),
+            exitCode = execution.exitCode,
+            elapsedMillis = execution.elapsedMillis,
+        )
+    }
+}
+
+/**
+ * Immutable rule-processed result for one curl execution.
  *
  * It keeps the parsed response and execution metadata separate so UI switches do not rerun curl.
  */
