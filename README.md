@@ -113,9 +113,7 @@ repositories {
 }
 
 dependencies {
-    implementation(
-        "com.github.amigo-wangwx.curl-visualizer:curl-core:v1.1.1"
-    )
+    implementation("com.github.amigo-wangwx:curl-visualizer:v1.1.1")
 }
 ```
 
