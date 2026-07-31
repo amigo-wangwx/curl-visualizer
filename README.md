@@ -104,24 +104,24 @@ CLI 退出码：
 - 其他依赖方也调用 URL 检测服务；可以使用默认规则，或在构造 checker 时组合
   自定义规则。请求执行、批量并发和规则应用始终由 core 完成。
 
-发布到本机 Maven 仓库：
-
-```bash
-./gradlew :curl-core:publishToMavenLocal
-```
-
-在其他 Gradle JVM/Kotlin 项目中接入：
+在其他 Gradle JVM/Kotlin 项目中通过 JitPack 接入：
 
 ```kotlin
 repositories {
-    mavenLocal()
+    maven("https://jitpack.io")
     mavenCentral()
 }
 
 dependencies {
-    implementation("com.amigo_wangwx.curlvisualizer:curl-core:1.1.0")
+    implementation(
+        "com.github.amigo-wangwx.curl-visualizer:curl-core:v1.1.1"
+    )
 }
 ```
+
+公开 JitPack 依赖不需要 GitHub token。需要在同一台机器上调试未发布代码时，也可以
+执行 `./gradlew :curl-core:publishToMavenLocal`，配置 `mavenLocal()` 后使用
+`com.amigo_wangwx.curlvisualizer:curl-core:1.1.1`。
 
 调用示例：
 
