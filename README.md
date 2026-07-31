@@ -119,7 +119,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.amigo_wangwx.curlvisualizer:curl-core:1.0.1")
+    implementation("com.amigo_wangwx.curlvisualizer:curl-core:1.1.0")
 }
 ```
 
